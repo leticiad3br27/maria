@@ -37,10 +37,19 @@ async function deleteVeterinario(id) {
   return result.affectedRows;
 }
 
+async function getVeterinarioByUsuarioId(usuario_id) {
+  const [rows] = await pool.query('SELECT * FROM veterinarios WHERE usuario_id = ?', [usuario_id]);
+  if (rows.length === 0) {
+    return null;
+  }
+  return new Veterinario(rows[0]);
+}
+
 module.exports = {
   getAllVeterinarios,
   getVeterinarioById,
   createVeterinario,
   updateVeterinario,
-  deleteVeterinario
+  deleteVeterinario,
+  getVeterinarioByUsuarioId
 };
